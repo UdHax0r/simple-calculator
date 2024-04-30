@@ -90,7 +90,6 @@ namespace Project1 {
 			this->operationLabel->Name = L"operationLabel";
 			this->operationLabel->Size = System::Drawing::Size(61, 41);
 			this->operationLabel->TabIndex = 1;
-			this->operationLabel->Text = L"(...)";
 			// 
 			// btnAdd
 			// 
@@ -163,6 +162,7 @@ namespace Project1 {
 			this->firstValueTextBox->Name = L"firstValueTextBox";
 			this->firstValueTextBox->Size = System::Drawing::Size(153, 33);
 			this->firstValueTextBox->TabIndex = 1;
+			this->firstValueTextBox->TextChanged += gcnew System::EventHandler(this, &MyForm::firstValueTextBox_TextChanged);
 			// 
 			// secondValueTextBox
 			// 
@@ -172,6 +172,7 @@ namespace Project1 {
 			this->secondValueTextBox->Name = L"secondValueTextBox";
 			this->secondValueTextBox->Size = System::Drawing::Size(153, 33);
 			this->secondValueTextBox->TabIndex = 2;
+			this->secondValueTextBox->TextChanged += gcnew System::EventHandler(this, &MyForm::secondValueTextBox_TextChanged);
 			// 
 			// MyForm
 			// 
@@ -189,7 +190,6 @@ namespace Project1 {
 			this->Controls->Add(this->operationLabel);
 			this->Name = L"MyForm";
 			this->Text = L"Simple Calculator";
-			this->Load += gcnew System::EventHandler(this, &MyForm::MyForm_Load);
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
@@ -198,12 +198,17 @@ namespace Project1 {
 
 #pragma region Methods.
 		//private: System::Void resultLabel_SetText(System::String ^text) {
-		//	resultLabel->Text = "= " + text;
+		//	resultLabel->Text = L"= " + text;
 		//}
 
 		//private: System::Void resultLabel_SetText(const double value) {
-		//	resultLabel->Text = "= " + value
+		//	resultLabel->Text = L"= " + value
 		//}
+
+	private: System::Void ResetLabels() {
+		resultLabel->Text = L"";
+		operationLabel->Text = L"";
+	}
 
 	private: System::Void label2_Click(System::Object ^sender, System::EventArgs ^e) {
 
@@ -215,62 +220,65 @@ namespace Project1 {
 
 	private: System::Void btnAdd_Click(System::Object ^sender, System::EventArgs ^e) {
 		try {
-			operationLabel->Text = "+";
+			operationLabel->Text = L"+";
 			const double result =
 				System::Convert::ToDouble(firstValueTextBox->Text)
 				+ System::Convert::ToDouble(secondValueTextBox->Text);
-			resultLabel->Text = "= " + result;
+			resultLabel->Text = L"= " + result;
 		} catch (System::FormatException ^e) {
-			operationLabel->Text = "(...)";
-			resultLabel->Text = "";
+			ResetLabels();
 		}
 	}
 
 	private: System::Void btnSub_Click(System::Object ^sender, System::EventArgs ^e) {
 		try {
-			operationLabel->Text = "-";
+			operationLabel->Text = L"-";
 			const double result =
 				System::Convert::ToDouble(firstValueTextBox->Text)
 				- System::Convert::ToDouble(secondValueTextBox->Text);
-			resultLabel->Text = "= " + result;
+			resultLabel->Text = L"= " + result;
 		} catch (System::FormatException ^e) {
-			operationLabel->Text = "(...)";
-			resultLabel->Text = "";
+			ResetLabels();
 		}
 	}
 
 	private: System::Void btnMulti_Click(System::Object ^sender, System::EventArgs ^e) {
 		try {
-			operationLabel->Text = "x";
+			operationLabel->Text = L"x";
 			const double result =
 				System::Convert::ToDouble(firstValueTextBox->Text)
 				* System::Convert::ToDouble(secondValueTextBox->Text);
-			resultLabel->Text = "= " + result;
+			resultLabel->Text = L"= " + result;
 		} catch (System::FormatException ^e) {
-			operationLabel->Text = "(...)";
-			resultLabel->Text = "";
+			ResetLabels();
 		}
 	}
 
 	private: System::Void btnDivide_Click(System::Object ^sender, System::EventArgs ^e) {
 		try {
-			operationLabel->Text = "/";
+			operationLabel->Text = L"/";
 			const double first = System::Convert::ToDouble(firstValueTextBox->Text);
 			const double second = System::Convert::ToDouble(secondValueTextBox->Text);
 
 			if (first == 0 || second == 0)
 				throw gcnew System::FormatException();
 
-			resultLabel->Text = "= " + first / second;
+			resultLabel->Text = L"= " + first / second;
 		} catch (System::FormatException ^e) {
-DivisionImpossible:
-			operationLabel->Text = "(...)";
-			resultLabel->Text = "";
+			ResetLabels();
 		}
 	}
 
-	private: System::Void MyForm_Load(System::Object ^sender, System::EventArgs ^e) {
+	private: System::Void secondValueTextBox_TextChanged(System::Object ^sender, System::EventArgs ^e) {
+		if (secondValueTextBox->Text == L"") {
+			ResetLabels();
+		}
+	}
 
+	private: System::Void firstValueTextBox_TextChanged(System::Object ^sender, System::EventArgs ^e) {
+		if (firstValueTextBox->Text == L"") {
+			ResetLabels();
+		}
 	}
 
 	};

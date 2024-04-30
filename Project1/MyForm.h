@@ -113,6 +113,7 @@ namespace Project1 {
 			this->resultLabel->Name = L"resultLabel";
 			this->resultLabel->Size = System::Drawing::Size(0, 31);
 			this->resultLabel->TabIndex = 9;
+			this->resultLabel->Click += gcnew System::EventHandler(this, &MyForm::resultLabel_Click);
 			// 
 			// btnMultiply
 			// 
@@ -190,6 +191,7 @@ namespace Project1 {
 			this->Controls->Add(this->operationLabel);
 			this->Name = L"MyForm";
 			this->Text = L"Simple Calculator";
+			this->Load += gcnew System::EventHandler(this, &MyForm::MyForm_Load);
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
@@ -210,12 +212,16 @@ namespace Project1 {
 		operationLabel->Text = L"";
 	}
 
-	private: System::Void label2_Click(System::Object ^sender, System::EventArgs ^e) {
+	private: System::Void ResultLabelEvent(System::Object ^source, System::Timers::ElapsedEventArgs ^args) {
 
 	}
 
-	private: System::Void label3_Click(System::Object ^sender, System::EventArgs ^e) {
-
+	private: System::Void resultLabel_Click(System::Object ^sender, System::EventArgs ^e) {
+		if (resultLabel->Text != L"") {
+			//System::Timers::Timer ^t = gcnew System::Timers::Timer(5000);
+			//t->Elapsed += ResultLabelEvent;
+			Clipboard::SetText(resultLabel->Text->Substring(2));
+		}
 	}
 
 	private: System::Void btnAdd_Click(System::Object ^sender, System::EventArgs ^e) {
@@ -279,6 +285,9 @@ namespace Project1 {
 		if (firstValueTextBox->Text == L"") {
 			ResetLabels();
 		}
+	}
+
+	private: System::Void MyForm_Load(System::Object ^sender, System::EventArgs ^e) {
 	}
 
 	};

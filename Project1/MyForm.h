@@ -10,6 +10,27 @@ namespace Project1 {
                 using namespace System::Windows::Forms;
                 using namespace System::Collections::Generic;
 
+                public ref class CalculatorOperationChars {
+                public:
+
+	            static bool Contains(char c) {
+		        return CalculatorOperationChars::instance->opChars->Contains(c);
+	            }
+
+                private:
+	            static CalculatorOperationChars^ instance; // Singleton instance.
+
+	            // Class fields:
+	            List<char>^ opChars = gcnew List<char>();
+
+	            CalculatorOperationChars() {
+		        this->opChars->Add('+');
+		        this->opChars->Add('-');
+		        this->opChars->Add('x');
+		        this->opChars->Add('/');
+	            }
+                };
+
                 /// <summary>
                 /// Summary for MyForm
                 /// </summary>
@@ -19,9 +40,6 @@ namespace Project1 {
 	            MyForm(void)
 	            {
 		        InitializeComponent();
-		        //
-		        //TODO: Add the constructor code here
-		        //
 	            }
 
                 protected:
@@ -375,7 +393,6 @@ namespace Project1 {
 
                 private:
 
-	            List<char>^ opChars = gcnew List<char>{ '+', '-' };
 	            double num1, num2;
 	            bool canCalculate;
 	            String^ sign;
@@ -484,24 +501,24 @@ namespace Project1 {
 	            }
                 }
                 private: System::Void textBox1_TextChanged(System::Object^ sender, System::EventArgs^ e) {
-	            if (System::String::IsNullOrWhiteSpace(textBox1->Text))
-		        return;
+	            //         if (System::String::IsNullOrWhiteSpace(textBox1->Text))
+		           //      return;
 
-	            try {
-		        num1 = System::Convert::ToDouble(textBox1->Text);
-	            }
-	            catch (System::FormatException^ e) {
-		        bool foundOp = false;
-		        for (int i = 0; i < textBox1->Text->Length; ++i) {
-			    char c = textBox1->Text[i];
-			    //if (System::Char::IsDigit(c))
-			    //	;
-			    /*else*/ if (opChars->Contains(c)) {
-				if (foundOp) return;
-				foundOp = true;
-			    }
-		        }
-	            }
+	            //         try {
+		           //      num1 = System::Convert::ToDouble(textBox1->Text);
+	            //         }
+	            //         catch (System::FormatException^ e) {
+		           //      bool foundOp = false;
+		           //      for (int i = 0; i < textBox1->Text->Length; ++i) {
+			          //   char c = textBox1->Text[i];
+			          //   //if (System::Char::IsDigit(c))
+			          //   //	;
+			          //   /*else*/ if (opChars->Contains(c)) {
+				         //if (foundOp) return;
+				         //foundOp = true;
+			          //   }
+		           //      }
+	            //         }
                 }
                 };
 }

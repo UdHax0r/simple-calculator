@@ -10,37 +10,19 @@ namespace Project1 {
                 using namespace System::Windows::Forms;
                 using namespace System::Collections::Generic;
 
-                public ref class CalculatorOperationChars {
-                public:
-
-	            static bool Contains(char c) {
-		        return CalculatorOperationChars::instance->opChars->Contains(c);
-	            }
-
-                private:
-	            static CalculatorOperationChars^ instance; // Singleton instance.
-
-	            // Class fields:
-	            List<char>^ opChars = gcnew List<char>();
-
-	            CalculatorOperationChars() {
-		        this->opChars->Add('+');
-		        this->opChars->Add('-');
-		        this->opChars->Add('x');
-		        this->opChars->Add('/');
-	            }
-                };
-
-                /// <summary>
-                /// Summary for MyForm
-                /// </summary>
-                public ref class MyForm : public System::Windows::Forms::Form
-                {
-                public:
-	            MyForm(void)
-	            {
-		        InitializeComponent();
-	            }
+	/// <summary>
+	/// Summary for MyForm
+	/// </summary>
+	public ref class MyForm : public System::Windows::Forms::Form
+	{
+	public:
+		MyForm(void)
+		{
+			InitializeComponent();
+			//
+			//TODO: Add the constructor code here
+			//
+		}
 
                 protected:
 	            /// <summary>
